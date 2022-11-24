@@ -15,7 +15,7 @@ FAZ = 'sons/faz.mp3'
 pontos = 0
 recorde = 0
 
-timer = 1800
+velo = 600
 
 pausa = False
 fim_do_game = False
@@ -75,6 +75,7 @@ memoria_bolas = pygame.sprite.Group()
 memoria_bolas.add(bola)
 
 while not fim_do_game:
+
     if not pausa:
         pygame.mouse.set_visible(False)
         for event in pygame.event.get():
@@ -89,13 +90,25 @@ while not fim_do_game:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 bola.shoot()
 
-            screen.blit(fundo, (0,0))
-            memoria_traves.draw(screen)
-            memoria_bolas.draw(screen)
-            memoria_bolas.update()
+        screen.blit(fundo, (0,0))
+        memoria_traves.draw(screen)
+        memoria_bolas.draw(screen)
+        memoria_bolas.update()
 
-            placar = fonte.render(f'GOLS DO NEY: {int(pontos)}', True,(0, 255, 0))
-            screen.blit(placar, (50,50))
+        placar = fonte.render(f'GOLS DO NEY: {int(pontos)}', True,(0, 255, 0))
+        screen.blit(placar, (50,50))
+
+        velocidade_recorde = fonte.render(f'VELOCIDADE DO NEY: {velo/60:.1f}', True,(0, 255, 0))
+        screen.blit(velocidade_recorde, (50,100))
+
+        velo -= 1
+        if velo < 0:
+            velo = 600
+
+            if pontos > recorde:
+                recorde = pontos
+                pontos = 0
+            pausa = not pausa
 
     else:
         screen.fill((0, 255, 0))
@@ -115,7 +128,7 @@ while not fim_do_game:
         pontos_marcacao = fonte.render(f"RECORDE: {recorde} ", True, (0,0,139))
 
         pause_acao = pause.get_rect(center = (largura/2, altura/2))
-        pontos_marcacao_acao = pontos_marcacao.get_rect(center = (largura/2, altura/2-40))
+        pontos_marcacao_acao = pontos_marcacao.get_rect(center = (largura/2, altura/2-50))
 
         screen.blit(pause, pause_acao)
         screen.blit(pontos_marcacao, pontos_marcacao_acao)
