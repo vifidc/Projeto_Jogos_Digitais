@@ -28,15 +28,27 @@ class Trave(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = [pos_x, pos_y]
 
-class Trave(pygame.sprite.Sprite):
+class Bola(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.image = pygame.image.load(BOLA).convert_alpha()
-        self.image = pygame.transform.scale(self.image, (100,100))
+        self.image = pygame.transform.scale(self.image, (50,50))
         self.rect = self.image.get_rect()
-        self.rect.center = [pos_x, pos_y]
+        self.sound = pygame.mixer.Sound(FAZ)
 
+    def update(self):
+        self.rect.center = pygame.mouse.get_pos()
 
+    def shoot(self):
+        global pontos
+        self.sound.play()
+
+        gol = pygame.sprite.spritecollide(bola, memoria_traves, False)
+        for gol in gol:
+            pontos += 1
+            gol.kill()
+            trave= Trave(random.randrange(0, largura), random.randrange(0,altura))
+            memoria_traves.add(trave)
 
 pygame.init()
 
@@ -58,6 +70,10 @@ for i in range(20):
     memoria_traves.add(trave)
 
 
+bola = Bola()
+memoria_bolas = pygame.sprite.Group()
+memoria_bolas.add(bola)
+
 while not fim_do_game:
     if not pausa:
         pygame.mouse.set_visible(False)
@@ -70,8 +86,16 @@ while not fim_do_game:
                 if event.key == pygame.K_ESCAPE:
                     pausa = not pausa
             
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                bola.shoot()
+
             screen.blit(fundo, (0,0))
             memoria_traves.draw(screen)
+            memoria_bolas.draw(screen)
+            memoria_bolas.update()
+
+            placar = fonte.render(f'GOLS DO NEY: {int(pontos)}', True,(0, 255, 0))
+            screen.blit(placar, (50,50))
 
     else:
         screen.fill((0, 255, 0))
