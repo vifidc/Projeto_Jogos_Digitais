@@ -7,9 +7,10 @@ altura = 720
 
 fundo = 'imagens/ousadia_e_alegria.png'
 fonte ='fonts/Tescaro Bold.ttf'
-trave = 'imagens/trave'
-bola = 'imagens/bola.jpg'
+TRAVE = 'imagens/trave.webp'
+BOLA = 'imagens/bola.jpg'
 jogador = 'imagens/neymar.png'
+FAZ = 'sons/faz.mp3'
 
 pontos = 0
 recorde = 0
@@ -18,6 +19,24 @@ timer = 1800
 
 pausa = False
 fim_do_game = False
+
+class Trave(pygame.sprite.Sprite):
+    def __init__(self, pos_x, pos_y):
+        super().__init__()
+        self.image = pygame.image.load(TRAVE).convert_alpha()
+        self.image = pygame.transform.scale(self.image, (100,100))
+        self.rect = self.image.get_rect()
+        self.rect.center = [pos_x, pos_y]
+
+class Trave(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.image.load(BOLA).convert_alpha()
+        self.image = pygame.transform.scale(self.image, (100,100))
+        self.rect = self.image.get_rect()
+        self.rect.center = [pos_x, pos_y]
+
+
 
 pygame.init()
 
@@ -28,9 +47,16 @@ fundo = pygame.transform.scale(fundo, (largura, altura))
 
 tempo = pygame.time.Clock()
 
-fonte = pygame.font.Font(fonte, 30)
+fonte = pygame.font.Font(fonte, 50)
 
 pygame.display.set_caption('RUMO AO HEXA - O GAME')
+
+memoria_traves = pygame.sprite.Group()
+
+for i in range(20):
+    trave = Trave(random.randrange(0,largura),random.randrange(0,altura))
+    memoria_traves.add(trave)
+
 
 while not fim_do_game:
     if not pausa:
@@ -45,6 +71,7 @@ while not fim_do_game:
                     pausa = not pausa
             
             screen.blit(fundo, (0,0))
+            memoria_traves.draw(screen)
 
     else:
         screen.fill((0, 255, 0))
