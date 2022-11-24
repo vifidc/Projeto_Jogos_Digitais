@@ -60,13 +60,14 @@ while not fim_do_game:
                 pygame.quit()
                 sys.exit()
 
-        pause = fonte.render(f"Aperte a tecla ESC para Iníciar",True, (0,255,0))
-        pontos_marcacao = fonte.render(f"Recorde: {recorde} ", True, (0,255,0))
+        pause = fonte.render(f" APERTE A TECLA ESC PARA INICIAR" ,True, (0,0,139))
+        pontos_marcacao = fonte.render(f"RECORDE: {recorde} ", True, (0,0,139))
 
         pause_acao = pause.get_rect(center = (largura/2, altura/2))
         pontos_marcacao_acao = pontos_marcacao.get_rect(center = (largura/2, altura/2-40))
 
-        screen.blit
+        screen.blit(pause, pause_acao)
+        screen.blit(pontos_marcacao, pontos_marcacao_acao)
 
     pygame.display.flip()
     tempo.tick(60)
