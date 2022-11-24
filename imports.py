@@ -6,7 +6,7 @@ largura = 1200
 altura = 720
 
 fundo = 'imagens/ousadia_e_alegria.png'
-fonte ='imagens/'
+fonte ='fonts/Tescaro Bold.ttf'
 alvo = 'imagens/trave'
 mira = 'imagens/mira_alvo'
 chute = 'imagens/pe_de_ouro'
@@ -28,15 +28,45 @@ fundo = pygame.transform.scale(fundo, (largura, altura))
 
 tempo = pygame.time.Clock()
 
+fonte = pygame.font.Font(fonte, 30)
+
 pygame.display.set_caption('RUMO AO HEXA - O GAME')
 
 while not fim_do_game:
     if not pausa:
+        pygame.mouse.set_visible(False)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    pausa = not pausa
+            
             screen.blit(fundo, (0,0))
+
+    else:
+        screen.fill((0, 255, 0))
+        pygame.mouse.set_visible(True)
+        for event in pygame.event.get():
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    pausa = not pausa
+
+                
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+        pause = fonte.render(f"Aperte a tecla ESC para Iníciar",True, (0,255,0))
+        pontos_marcacao = fonte.render(f"Recorde: {recorde} ", True, (0,255,0))
+
+        pause_acao = pause.get_rect(center = (largura/2, altura/2))
+        pontos_marcacao_acao = pontos_marcacao.get_rect(center = (largura/2, altura/2-40))
+
+        screen.blit
 
     pygame.display.flip()
     tempo.tick(60)
