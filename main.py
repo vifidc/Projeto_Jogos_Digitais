@@ -7,9 +7,9 @@ altura = 720
 
 fundo = 'imagens/ousadia_e_alegria.png'
 fonte ='fonts/Tescaro Bold.ttf'
-alvo = 'imagens/trave'
-mira = 'imagens/mira.png'
-chute = 'imagens/pe_de_ouro'
+trave = 'imagens/trave'
+bola = 'imagens/bola.jpg'
+jogador = 'imagens/neymar.png'
 
 pontos = 0
 recorde = 0
