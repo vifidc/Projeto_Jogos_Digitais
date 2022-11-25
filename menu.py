@@ -1,3 +1,7 @@
+#Nome: André Feller - TIA: 31908268
+#Nome: Louis Righi Bernadet - TIA: 31928153 
+#Nome: Vinícius Figueiredo da Cruz - TIA:32148801
+
 import pygame, random, os, sys
 from pygame.locals import *
 
